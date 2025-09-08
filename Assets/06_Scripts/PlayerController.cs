@@ -18,6 +18,13 @@ public class PlayerController : MonoBehaviour
     [Range(MIN_SPEED, MAX_SPEED)] public float moveSpeed = START_SPEED;
     #endregion
 
+    #region Property
+    public int Health
+    {
+        get { return currentHealth; }
+    }
+    #endregion
+
     #region private
     int currentHealth;
     Rigidbody2D rb2d;
@@ -31,7 +38,7 @@ public class PlayerController : MonoBehaviour
         //Application.targetFrameRate = 10;
         MoveAction.Enable();
         rb2d = GetComponent<Rigidbody2D>();
-        currentHealth = maxHealth;
+        currentHealth = 1; //maxHealth;
     }
 
     void Update()
@@ -39,7 +46,7 @@ public class PlayerController : MonoBehaviour
         // if (Keyboard.current.upArrowKey.isPressed)
 
         move = MoveAction.ReadValue<Vector2>();
-        Debug.Log(move);
+        //Debug.Log(move);
     }
 
     void FixedUpdate()
@@ -50,7 +57,7 @@ public class PlayerController : MonoBehaviour
         rb2d.MovePosition(position);
     }
 
-    void ChangeHealth(int amount)
+    public void ChangeHealth(int amount)
     {
         currentHealth =
             Mathf.Clamp(currentHealth + amount,
