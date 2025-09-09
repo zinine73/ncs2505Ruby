@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public InputAction MoveAction;
     [Range(MIN_HEALTH, MAX_HEALTH)] public int maxHealth = START_HEALTH;
     [Range(MIN_SPEED, MAX_SPEED)] public float moveSpeed = START_SPEED;
+    public float timeInvicible = 2.0f;
+    public float timeHeal = 2.0f;
     #endregion
 
     #region Property
@@ -29,6 +32,10 @@ public class PlayerController : MonoBehaviour
     int currentHealth;
     Rigidbody2D rb2d;
     Vector2 move;
+    bool isInvicible;
+    float damageCooldown;
+    bool isHealing;
+    float healCooldown;
     #endregion
 
     #region Method
@@ -38,7 +45,7 @@ public class PlayerController : MonoBehaviour
         //Application.targetFrameRate = 10;
         MoveAction.Enable();
         rb2d = GetComponent<Rigidbody2D>();
-        currentHealth = 1; //maxHealth;
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -47,6 +54,22 @@ public class PlayerController : MonoBehaviour
 
         move = MoveAction.ReadValue<Vector2>();
         //Debug.Log(move);
+        if (isInvicible)
+        {
+            damageCooldown -= Time.deltaTime;
+            if (damageCooldown < 0)
+            {
+                isInvicible = false;
+            }
+        }
+        if (isHealing)
+        {
+            healCooldown -= Time.deltaTime;
+            if (healCooldown < 0)
+            {
+                isHealing = false;
+            }
+        }
     }
 
     void FixedUpdate()
@@ -59,6 +82,26 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeHealth(int amount)
     {
+        if (amount < 0)
+        {
+            if (isInvicible)
+            {
+                return;
+            }
+            isInvicible = true;
+            damageCooldown = timeInvicible;
+        }
+
+        if (isHealing)
+        {
+            return;
+        }
+        else
+        {
+            isHealing = true;
+            healCooldown = timeHeal;
+        }
+
         currentHealth =
             Mathf.Clamp(currentHealth + amount,
             MIN_HEALTH, maxHealth);
