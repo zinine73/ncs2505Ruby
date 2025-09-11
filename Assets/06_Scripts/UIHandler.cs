@@ -5,8 +5,15 @@ using UnityEngine.UIElements;
 
 public class UIHandler : MonoBehaviour
 {
+    public static UIHandler instance { get; private set; }
     //public float CurrentHealth = 0.5f;
     VisualElement m_Healthbar;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
     void Start()
     {
         var uiDocument = GetComponent<UIDocument>();
