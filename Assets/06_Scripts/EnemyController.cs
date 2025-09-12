@@ -10,8 +10,10 @@ public class EnemyController : MonoBehaviour
     Rigidbody2D rb2d;
     float timer;
     int direction = 1;
+    Animator animator;
     void Start()
     {
+        animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         timer = changeTime;
     }
@@ -22,6 +24,10 @@ public class EnemyController : MonoBehaviour
         {
             direction = -direction;
             timer = changeTime;
+            if (direction > 0)
+            {
+                vertical = Random.Range(0, 100) > 50;
+            }
         }
     }
     void FixedUpdate()
@@ -30,10 +36,14 @@ public class EnemyController : MonoBehaviour
         if (vertical)
         {
             position.y += speed * direction * Time.deltaTime;
+            animator.SetFloat("MoveX", 0);
+            animator.SetFloat("MoveY", direction);
         }
         else
         {
             position.x += speed * direction * Time.deltaTime;
+            animator.SetFloat("MoveX", direction);
+            animator.SetFloat("MoveY", 0);
         }
         rb2d.MovePosition(position);
     }
