@@ -22,10 +22,11 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Property
-    public int Health
-    {
-        get { return currentHealth; }
-    }
+    // public int Health
+    // {
+    //     get { return currentHealth; }
+    // }
+    public int Health => currentHealth;
     #endregion
 
     #region private
@@ -36,6 +37,8 @@ public class PlayerController : MonoBehaviour
     float damageCooldown;
     bool isHealing;
     float healCooldown;
+    Animator animator;
+    Vector2 moveDirection = new Vector2(1, 0);
     #endregion
 
     #region Method
@@ -46,6 +49,7 @@ public class PlayerController : MonoBehaviour
         MoveAction.Enable();
         rb2d = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -53,6 +57,17 @@ public class PlayerController : MonoBehaviour
         // if (Keyboard.current.upArrowKey.isPressed)
 
         move = MoveAction.ReadValue<Vector2>();
+        //if (move.x != 0.0f || move.y != 0.0f)
+        if (!Mathf.Approximately(move.x, 0.0f)
+        || !Mathf.Approximately(move.y, 0.0f))
+        {
+            moveDirection.Set(move.x, move.y);
+            moveDirection.Normalize();
+        }
+        animator.SetFloat("Look X", moveDirection.x);
+        animator.SetFloat("Look Y", moveDirection.y);
+        animator.SetFloat("Speed", move.magnitude);
+        
         //Debug.Log(move);
         if (isInvicible)
         {
@@ -90,6 +105,7 @@ public class PlayerController : MonoBehaviour
             }
             isInvicible = true;
             damageCooldown = timeInvicible;
+            animator.SetTrigger("Hit");
         }
 
         if (isHealing)
