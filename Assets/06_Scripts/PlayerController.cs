@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     const float MIN_SPEED = 1.0f;
     const float MAX_SPEED = 10.0f;
     const float START_SPEED = 3.0f;
+    const float LAUNCH_UP = 0.5f;
+    const float LAUNCH_FORCE = 300.0f;
     #endregion
     #region public
     public InputAction MoveAction;
@@ -19,6 +21,7 @@ public class PlayerController : MonoBehaviour
     [Range(MIN_SPEED, MAX_SPEED)] public float moveSpeed = START_SPEED;
     public float timeInvicible = 2.0f;
     public float timeHeal = 2.0f;
+    public GameObject projectilePrefab;
     #endregion
 
     #region Property
@@ -67,7 +70,7 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Look X", moveDirection.x);
         animator.SetFloat("Look Y", moveDirection.y);
         animator.SetFloat("Speed", move.magnitude);
-        
+
         //Debug.Log(move);
         if (isInvicible)
         {
@@ -84,6 +87,10 @@ public class PlayerController : MonoBehaviour
             {
                 isHealing = false;
             }
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Launch();
         }
     }
 
@@ -125,6 +132,19 @@ public class PlayerController : MonoBehaviour
         UIHandler.instance.SetHealthValue(
             currentHealth / (float)maxHealth
         );
+    }
+
+    void Launch()
+    {
+        GameObject projectileObject = Instantiate(
+            projectilePrefab,
+            rb2d.position + Vector2.up * LAUNCH_UP,
+            Quaternion.identity
+        );
+        Projectile projectile =
+            projectileObject.GetComponent<Projectile>();
+        projectile.Launch(moveDirection, LAUNCH_FORCE);
+        animator.SetTrigger("Launch");
     }
     #endregion
 }
