@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     float timer;
     int direction = 1;
     Animator animator;
+    bool broken = true;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -32,6 +33,11 @@ public class EnemyController : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if (!broken)
+        {
+            return;
+        }
+
         Vector2 position = rb2d.position;
         if (vertical)
         {
@@ -56,5 +62,14 @@ public class EnemyController : MonoBehaviour
         {
             player.ChangeHealth(-1);
         }
+    }
+
+    public void Fix()
+    {
+        // 적이 파괴되는 경우
+        //Destroy(gameObject);
+        broken = false;
+        rb2d.simulated = false;
+        animator.SetTrigger("Fixed");
     }
 }

@@ -5,10 +5,26 @@ using UnityEngine.InputSystem;
 
 public class Projectile : MonoBehaviour
 {
+    const float DESTROY_TIME = 5.0f;
+    const float DESTROY_POS = 30.0f;
+    float timer;
     Rigidbody2D rb2d;
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        timer = DESTROY_TIME;
+    }
+    void Update()
+    {
+        // if (transform.position.magnitude > DESTROY_POS)
+        // {
+        //     Destroy(gameObject);
+        // }
+        timer -= Time.deltaTime;
+        if (timer < 0)
+        {
+            Destroy(gameObject);
+        }
     }
     public void Launch(Vector2 direction, float force)
     {
@@ -16,12 +32,18 @@ public class Projectile : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Trigger with " + collision.gameObject);
+        EnemyController enemy =
+            collision.GetComponent<EnemyController>();
+        // if (enemy != null)
+        // {
+        //     enemy.Fix();
+        // }
+        enemy?.Fix();
         Destroy(gameObject);
     }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision with " + collision.gameObject);
         Destroy(gameObject);
     }
 }
