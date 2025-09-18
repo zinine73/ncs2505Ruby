@@ -165,7 +165,12 @@ public class PlayerController : MonoBehaviour
         );
         if (hit.collider != null)
         {
-            Debug.Log("Raycast hit :" + hit.collider.gameObject);
+            NPCController npc = hit.collider
+                .GetComponent<NPCController>();
+            if (npc != null)
+            {
+                UIHandler.instance.DisplayDialogue();
+            }
         }
     }
     #endregion
