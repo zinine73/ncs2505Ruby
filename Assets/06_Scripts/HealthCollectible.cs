@@ -8,6 +8,7 @@ public class HealthCollectible : MonoBehaviour
     // 값은 유니티에디터에서 변경 가능하도록
     //public int healthValue;
     [SerializeField] int healthValue;
+    [SerializeField] AudioClip collectedClip;
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -19,6 +20,7 @@ public class HealthCollectible : MonoBehaviour
         {
             // 체력회복값 변수 전달
             controller.ChangeHealth(healthValue);
+            controller.PlaySound(collectedClip);
             Destroy(gameObject);
         }
     }

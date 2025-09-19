@@ -48,9 +48,15 @@ public class UIHandler : MonoBehaviour
 
     public void DisplayDialogue()
     {
+        m_NPCDialogue.style.display = DisplayStyle.Flex;
+        m_TimerDisplay = displayTime;
+    }
+
+    public void DisplayDialogue(string str)
+    {
         m_NPCDialogue
             .Q<VisualElement>("Background")
-            .Q<Label>("Label").text = "test";
+            .Q<Label>("Label").text = str;
         m_NPCDialogue.style.display = DisplayStyle.Flex;
         m_TimerDisplay = displayTime;
     }

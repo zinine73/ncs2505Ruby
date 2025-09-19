@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     float healCooldown;
     Animator animator;
     Vector2 moveDirection = new Vector2(1, 0);
+    AudioSource audioSource;
     #endregion
 
     #region Method
@@ -57,6 +58,7 @@ public class PlayerController : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -169,9 +171,21 @@ public class PlayerController : MonoBehaviour
                 .GetComponent<NPCController>();
             if (npc != null)
             {
-                UIHandler.instance.DisplayDialogue();
+                if (npc.talkStr == string.Empty)
+                {
+                    UIHandler.instance.DisplayDialogue();
+                }
+                else
+                {
+                    UIHandler.instance.DisplayDialogue(npc.talkStr);
+                }
             }
         }
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
     #endregion
 }
