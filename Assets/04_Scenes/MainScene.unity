@@ -997,6 +997,46 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7427903981648901335, guid: 5ec0c4969c6fb4949b6d496a6971b562, type: 3}
   m_PrefabInstance: {fileID: 673550125}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &881752129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 881752130}
+  - component: {fileID: 881752131}
+  m_Layer: 0
+  m_Name: Listener
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &881752130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881752129}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1171276592}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &881752131
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881752129}
+  m_Enabled: 1
 --- !u!4 &890380962 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4822943781623245055, guid: 7acd9d369e3c0a640b188e47c4297710, type: 3}
@@ -1174,7 +1214,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1171276592}
   - component: {fileID: 1171276591}
-  - component: {fileID: 1171276590}
   - component: {fileID: 1171276593}
   - component: {fileID: 1171276594}
   m_Layer: 0
@@ -1184,14 +1223,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1171276590
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1171276589}
-  m_Enabled: 1
 --- !u!20 &1171276591
 Camera:
   m_ObjectHideFlags: 0
@@ -1255,7 +1286,8 @@ Transform:
   m_LocalPosition: {x: 2.94, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 881752130}
   m_Father: {fileID: 1122517145}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1171276593
@@ -1823,7 +1855,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &1954457523
 AudioSource:
   m_ObjectHideFlags: 0
@@ -12947,6 +12979,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 63384384}
     m_Modifications:
+    - target: {fileID: 2712341886411886348, guid: 1348fd6f8d8727b419cc3e9e019c1e74, type: 3}
+      propertyPath: MaxDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2712341886411886348, guid: 1348fd6f8d8727b419cc3e9e019c1e74, type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3130387751212892852, guid: 1348fd6f8d8727b419cc3e9e019c1e74, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.42
@@ -13255,6 +13295,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 63384384}
     m_Modifications:
+    - target: {fileID: 2455735497122922497, guid: 7acd9d369e3c0a640b188e47c4297710, type: 3}
+      propertyPath: walkClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a0ccbead04ec99c4e9ddc660333de268, type: 3}
+    - target: {fileID: 2455735497122922497, guid: 7acd9d369e3c0a640b188e47c4297710, type: 3}
+      propertyPath: gotHitClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c7d3a91ac32abbe47a8931a8ffc37bc6, type: 3}
+    - target: {fileID: 2455735497122922497, guid: 7acd9d369e3c0a640b188e47c4297710, type: 3}
+      propertyPath: projectileClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c87de0cae68cdbb409eec8ba23a860d0, type: 3}
     - target: {fileID: 4822943781623245055, guid: 7acd9d369e3c0a640b188e47c4297710, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.94

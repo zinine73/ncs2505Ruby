@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     const float LAUNCH_FORCE = 300.0f;
     const float RAY_POS_UP = 0.2f;
     const float RAY_LEN = 1.5f;
+    const float TIME_WALK = 1.25f;
     #endregion
     #region public
     public InputAction MoveAction;
@@ -42,10 +43,15 @@ public class PlayerController : MonoBehaviour
     bool isInvicible;
     float damageCooldown;
     bool isHealing;
+    bool isDoneWalkClip;
+    float timerWalk;
     float healCooldown;
     Animator animator;
     Vector2 moveDirection = new Vector2(1, 0);
     AudioSource audioSource;
+    [SerializeField] AudioClip projectileClip;
+    [SerializeField] AudioClip gotHitClip;
+    [SerializeField] AudioClip walkClip;
     #endregion
 
     #region Method
@@ -59,6 +65,7 @@ public class PlayerController : MonoBehaviour
         currentHealth = maxHealth;
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+        isDoneWalkClip = true;
     }
 
     void Update()
@@ -76,7 +83,21 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Look X", moveDirection.x);
         animator.SetFloat("Look Y", moveDirection.y);
         animator.SetFloat("Speed", move.magnitude);
-
+        if ((move.magnitude == 1) && (isDoneWalkClip))
+        {
+            PlaySound(walkClip);
+            isDoneWalkClip = false;
+            timerWalk = TIME_WALK;
+        }
+        if (timerWalk > 0)
+        {
+            timerWalk -= Time.deltaTime;
+            if (timerWalk <= 0)
+            {
+                isDoneWalkClip = true;
+            }
+        }
+        Debug.Log(move.magnitude);
         //Debug.Log(move);
         if (isInvicible)
         {
@@ -123,6 +144,7 @@ public class PlayerController : MonoBehaviour
             isInvicible = true;
             damageCooldown = timeInvicible;
             animator.SetTrigger("Hit");
+            PlaySound(gotHitClip);
         }
 
         if (isHealing)
@@ -155,6 +177,7 @@ public class PlayerController : MonoBehaviour
             projectileObject.GetComponent<Projectile>();
         projectile.Launch(moveDirection, LAUNCH_FORCE);
         animator.SetTrigger("Launch");
+        PlaySound(projectileClip);
     }
 
     void FindFriend()
@@ -186,6 +209,11 @@ public class PlayerController : MonoBehaviour
     public void PlaySound(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
+    }
+
+    public void PlayGotHitSound()
+    {
+        PlaySound(gotHitClip);
     }
     #endregion
 }
