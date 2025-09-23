@@ -204,6 +204,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1122517145}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!198 &40452992 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8246623258342386790, guid: 1348fd6f8d8727b419cc3e9e019c1e74, type: 3}
+  m_PrefabInstance: {fileID: 411541203}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &43263547
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,6 +476,14 @@ PrefabInstance:
       propertyPath: vertical
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8625159338087548440, guid: 1348fd6f8d8727b419cc3e9e019c1e74, type: 3}
+      propertyPath: playerCtrl
+      value: 
+      objectReference: {fileID: 976708482}
+    - target: {fileID: 8625159338087548440, guid: 1348fd6f8d8727b419cc3e9e019c1e74, type: 3}
+      propertyPath: smokeEffect
+      value: 
+      objectReference: {fileID: 40452992}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1077,6 +1090,17 @@ Transform:
   - {fileID: 698829054}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &976708482 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2455735497122922497, guid: 7acd9d369e3c0a640b188e47c4297710, type: 3}
+  m_PrefabInstance: {fileID: 7205315570363298633}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca5b96d9824c9264b8edb0594d16d294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &984715880 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3189387725504876707, guid: 2fece60f619b46b4eac1275052b6892b, type: 3}
@@ -1085,6 +1109,11 @@ Transform:
 --- !u!4 &991440443 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3130387751212892852, guid: 1348fd6f8d8727b419cc3e9e019c1e74, type: 3}
+  m_PrefabInstance: {fileID: 2008525610}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &997972472 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8246623258342386790, guid: 1348fd6f8d8727b419cc3e9e019c1e74, type: 3}
   m_PrefabInstance: {fileID: 2008525610}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1009618943 stripped
@@ -1546,6 +1575,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9131588961405834358, guid: f9aebd1565a502a4f85a27881a21dea5, type: 3}
   m_PrefabInstance: {fileID: 1620953613}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &1559042266 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8246623258342386790, guid: 1348fd6f8d8727b419cc3e9e019c1e74, type: 3}
+  m_PrefabInstance: {fileID: 4697488719265363292}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1569540761
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1855,7 +1889,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &1954457523
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2084,6 +2118,18 @@ PrefabInstance:
       propertyPath: vertical
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8625159338087548440, guid: 1348fd6f8d8727b419cc3e9e019c1e74, type: 3}
+      propertyPath: playerCtrl
+      value: 
+      objectReference: {fileID: 976708482}
+    - target: {fileID: 8625159338087548440, guid: 1348fd6f8d8727b419cc3e9e019c1e74, type: 3}
+      propertyPath: enemyHealth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8625159338087548440, guid: 1348fd6f8d8727b419cc3e9e019c1e74, type: 3}
+      propertyPath: smokeEffect
+      value: 
+      objectReference: {fileID: 997972472}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13039,6 +13085,14 @@ PrefabInstance:
       propertyPath: vertical
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8625159338087548440, guid: 1348fd6f8d8727b419cc3e9e019c1e74, type: 3}
+      propertyPath: playerCtrl
+      value: 
+      objectReference: {fileID: 976708482}
+    - target: {fileID: 8625159338087548440, guid: 1348fd6f8d8727b419cc3e9e019c1e74, type: 3}
+      propertyPath: smokeEffect
+      value: 
+      objectReference: {fileID: 1559042266}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13303,6 +13357,10 @@ PrefabInstance:
       propertyPath: gotHitClip
       value: 
       objectReference: {fileID: 8300000, guid: c7d3a91ac32abbe47a8931a8ffc37bc6, type: 3}
+    - target: {fileID: 2455735497122922497, guid: 7acd9d369e3c0a640b188e47c4297710, type: 3}
+      propertyPath: questCompClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d88a197d7751c9a448eea078220825db, type: 3}
     - target: {fileID: 2455735497122922497, guid: 7acd9d369e3c0a640b188e47c4297710, type: 3}
       propertyPath: projectileClip
       value: 

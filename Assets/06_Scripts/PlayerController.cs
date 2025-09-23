@@ -17,7 +17,14 @@ public class PlayerController : MonoBehaviour
     const float RAY_POS_UP = 0.2f;
     const float RAY_LEN = 1.5f;
     const float TIME_WALK = 1.25f;
+    const string QUEST_COMP = "Good job!!!";
+    readonly int hashHit = Animator.StringToHash("Hit");
+    readonly int hashLaunch = Animator.StringToHash("Launch");
+    readonly int hashLookX = Animator.StringToHash("Look X");
+    readonly int hashLookY = Animator.StringToHash("Look Y");
+    readonly int hashSpeed = Animator.StringToHash("Speed");
     #endregion
+
     #region public
     public InputAction MoveAction;
     public InputAction talkAction;
@@ -34,9 +41,15 @@ public class PlayerController : MonoBehaviour
     //     get { return currentHealth; }
     // }
     public int Health => currentHealth;
+    public int FixedEnemy
+    {
+        get => fixedEnemy;
+        set => fixedEnemy = value;
+    }
     #endregion
 
     #region private
+    int fixedEnemy;
     int currentHealth;
     Rigidbody2D rb2d;
     Vector2 move;
@@ -52,6 +65,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip projectileClip;
     [SerializeField] AudioClip gotHitClip;
     [SerializeField] AudioClip walkClip;
+    [SerializeField] AudioClip questCompClip;
     #endregion
 
     #region Method
@@ -66,6 +80,8 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
         isDoneWalkClip = true;
+        // 씬에 있는 enemy 수를 fixedEnemy에 넣기
+        fixedEnemy = GameObject.FindGameObjectsWithTag("ENEMY").Length;
     }
 
     void Update()
@@ -80,9 +96,9 @@ public class PlayerController : MonoBehaviour
             moveDirection.Set(move.x, move.y);
             moveDirection.Normalize();
         }
-        animator.SetFloat("Look X", moveDirection.x);
-        animator.SetFloat("Look Y", moveDirection.y);
-        animator.SetFloat("Speed", move.magnitude);
+        animator.SetFloat(hashLookX, moveDirection.x);
+        animator.SetFloat(hashLookY, moveDirection.y);
+        animator.SetFloat(hashSpeed, move.magnitude);
         if ((move.magnitude == 1) && (isDoneWalkClip))
         {
             PlaySound(walkClip);
@@ -97,8 +113,6 @@ public class PlayerController : MonoBehaviour
                 isDoneWalkClip = true;
             }
         }
-        Debug.Log(move.magnitude);
-        //Debug.Log(move);
         if (isInvicible)
         {
             damageCooldown -= Time.deltaTime;
@@ -143,7 +157,7 @@ public class PlayerController : MonoBehaviour
             }
             isInvicible = true;
             damageCooldown = timeInvicible;
-            animator.SetTrigger("Hit");
+            animator.SetTrigger(hashHit);
             PlaySound(gotHitClip);
         }
 
@@ -176,7 +190,7 @@ public class PlayerController : MonoBehaviour
         Projectile projectile =
             projectileObject.GetComponent<Projectile>();
         projectile.Launch(moveDirection, LAUNCH_FORCE);
-        animator.SetTrigger("Launch");
+        animator.SetTrigger(hashLaunch);
         PlaySound(projectileClip);
     }
 
@@ -194,6 +208,14 @@ public class PlayerController : MonoBehaviour
                 .GetComponent<NPCController>();
             if (npc != null)
             {
+                // Check quest complete
+                if (fixedEnemy == 0)
+                {
+                    UIHandler.instance.DisplayDialogue(QUEST_COMP);
+                    PlaySound(questCompClip);
+                    return;
+                }
+
                 if (npc.talkStr == string.Empty)
                 {
                     UIHandler.instance.DisplayDialogue();

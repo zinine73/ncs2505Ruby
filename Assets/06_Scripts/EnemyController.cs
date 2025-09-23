@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    readonly int hashMoveX = Animator.StringToHash("MoveX");
+    readonly int hashMoveY = Animator.StringToHash("MoveY");
+    readonly int hashFixed = Animator.StringToHash("Fixed");
+
     [SerializeField] float speed;
     [SerializeField] bool vertical;
     [SerializeField] float changeTime = 3.0f;
     [SerializeField] AudioClip fixedClip;
-    [SerializeField] AudioClip gotHitClip;
+    [SerializeField] AudioClip[] gotHitClip;
+    [SerializeField] int enemyHealth = 3;
+    [SerializeField] PlayerController playerCtrl;
+    [SerializeField] ParticleSystem smokeEffect;
     Rigidbody2D rb2d;
     float timer;
     int direction = 1;
@@ -46,14 +53,14 @@ public class EnemyController : MonoBehaviour
         if (vertical)
         {
             position.y += speed * direction * Time.deltaTime;
-            animator.SetFloat("MoveX", 0);
-            animator.SetFloat("MoveY", direction);
+            animator.SetFloat(hashMoveX, 0);
+            animator.SetFloat(hashMoveY, direction);
         }
         else
         {
             position.x += speed * direction * Time.deltaTime;
-            animator.SetFloat("MoveX", direction);
-            animator.SetFloat("MoveY", 0);
+            animator.SetFloat(hashMoveX, direction);
+            animator.SetFloat(hashMoveY, 0);
         }
         rb2d.MovePosition(position);
     }
@@ -71,12 +78,20 @@ public class EnemyController : MonoBehaviour
 
     public void Fix()
     {
+        if (--enemyHealth > 0)
+        {
+            int index = Random.Range(0, gotHitClip.Length);
+            audioSource.PlayOneShot(gotHitClip[index]);
+            return;
+        }
         // 적이 파괴되는 경우
         //Destroy(gameObject);
         broken = false;
         rb2d.simulated = false;
-        animator.SetTrigger("Fixed");
+        animator.SetTrigger(hashFixed);
         audioSource.Stop();
         audioSource.PlayOneShot(fixedClip);
+        smokeEffect.Stop();
+        playerCtrl.FixedEnemy--;
     }
 }
