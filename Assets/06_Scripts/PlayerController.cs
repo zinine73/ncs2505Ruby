@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour
         );
     }
 
-    void Launch()
+    public void Launch()
     {
         GameObject projectileObject = Instantiate(
             projectilePrefab,
@@ -194,7 +194,7 @@ public class PlayerController : MonoBehaviour
         PlaySound(projectileClip);
     }
 
-    void FindFriend()
+    public void FindFriend()
     {
         RaycastHit2D hit = Physics2D.Raycast(
             rb2d.position + Vector2.up * RAY_POS_UP,
